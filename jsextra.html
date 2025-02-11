@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JS Extra Credit</title>
+</head>
+
+<body>
+
+<script>
+function problem1() {
+    document.write("<h2>PROBLEM 1 OUTPUT: </h2><br />");
+    for (let i = 40; i >= 10; i -= 2) {
+        document.write(i);
+        document.write("<br />");
+    }
+    document.write("<br />");
+}
+
+function problem2() {
+    document.write("<h2>PROBLEM 2 OUTPUT: </h2><br />");
+    let sum = 0;
+    while (sum <= 20) {
+        let userInput = prompt("Problem 2- Enter a number:");
+        let num = parseFloat(userInput);
+        if (!isNaN(num)) {
+            sum += num;
+        } 
+    }
+    document.write("Final sum: " + sum + "<br />");
+    document.write("<br />");
+}
+
+function problem3() {
+    document.write("<h2>PROBLEM 3 OUTPUT: </h2><br />");
+    let sum = 0;
+    let arr = [];
+    while (sum <= 20) {
+        let userInput = prompt("Problem 3- Enter a number:");
+        let num = parseFloat(userInput);
+        if (!isNaN(num)) {
+            sum += num;
+            arr.push(num);
+        } 
+    }
+    document.write("Final sum: " + sum + "<br />");
+    document.write("Final array: [" + arr.join(", ") + "] <br />");
+    document.write("<br />");
+}
+
+var songs = {
+    "Idol": "YOASOBI",
+    "Usseewa": "Ado",
+    "Cruel Angel's Thesis": "Yoko Takahashi",
+    "Mephisto": "QUEEN BEE",
+    "That's Why I Gave Up on Music":"Yorushika"
+};
+
+function problem4() {
+    document.write("<h2>PROBLEM 4 OUTPUT: </h2><br />");
+    for (var item in songs) {
+        document.write(item + ": " + songs[item] + "<br />");
+    }
+    document.write("<br />");
+}
+
+function problem5() {
+    document.write("<h2>PROBLEM 5 OUTPUT: </h2>");
+    var bandName = prompt("Problem 5- Enter the name of a band (e.g., YOASOBI, Ado, Yoko Takahashi, QUEEN BEE, Yorushika):");
+    var found = false;
+    document.write("Songs by " + bandName + ": <br />");
+    for (var item in songs) {
+        if (songs[item] === bandName) {
+            document.write(item + "<br />");
+            found = true;
+        }
+    }
+    if (!found) {
+        document.write("<p>No songs found by the band: " + bandName + "</p>");
+    }
+    document.write("<br />");
+}
+
+function doAll() {
+    problem1();
+    problem2();
+    problem3();
+    problem4();
+    problem5();
+}
+
+doAll();
+</script>
+</body>
+</html>
