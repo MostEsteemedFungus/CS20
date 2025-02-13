@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Joe's Hotdog Stand</title>
+
+<style type="text/css">
+.item {width: 110px; display:inline-block;}
+.price {width: 100px; display:inline-block;  text-align:right}
+</style>
+
+</head>
+
+<body>
+    <script>
+        const PRICES = [4.99, 3.99, 1.79];
+        const ITEMS = ["Hotdogs", "French Fries", "Drinks"]
+        
+        function showMoney(amount) {
+            let roundedAmount = Math.round(amount * 100); 
+            let result = roundedAmount / 100;
+            let resultString = result.toString(); 
+            if (!resultString.includes('.')) { //sigh bc i cant use toFixed sigh sigh sighhhhh
+                return resultString + '.00';  // add '.00' if no decimal 
+            } 
+            else {
+                let parts = resultString.split('.');
+                if (parts[1].length === 1) {
+                    return resultString + '0';  // add a '0' to result w. only one decimal
+                } else {
+                    return resultString;  // return as is if result already has two decimal places
+                }
+            }
+        }
+
+        function displayMenu() 
+        {
+            for (i=0; i< ITEMS.length; i++)
+            {
+                document.write("<div class='menu-item'>")
+                document.write("<div class='item'>" + (i+1) + ". " + ITEMS[i] +"</div>")
+                document.write("<div class='price'> $"+ showMoney(PRICES[i]) +"</div>")
+                document.write ("</div>");
+            }
+        }
+
+        function validPrompt(question) { // only lets users input numbers hehe
+            let userInput;
+            while (true) {
+                userInput = prompt(question);
+                if (!isNaN(userInput) && userInput.trim() !== '') {
+                    return parseInt(userInput); // convert to integer and return
+                } else {
+                    alert("Please enter a valid number.");
+                }
+            }
+        }
+ 
+        function order()
+        {
+            let numDogs = validPrompt("How many hotdogs do you want?");
+            let numFries = validPrompt("How many fries do you want?");
+            let numDrinks = validPrompt("How many drinks do you want?");
+
+            // order w. normal prices
+            let orderSummary = document.createElement("div");
+            let dogPrice = (numDogs * PRICES[0]);
+            let friesPrice = (numFries * PRICES[1]);
+            let drinksPrice = (numDrinks * PRICES[2])
+            let subtotal = dogPrice + friesPrice + drinksPrice;
+
+            // applying discount
+            let discount = 0;
+            let subtotalDiscount = subtotal;
+            if (subtotal >= 30) {
+                discount = subtotal * 0.10; // 10% discount
+                subtotalDiscount -= discount; // update the subtotal after discount
+            }
+
+            orderSummary.innerHTML = `
+                <p>Hotdogs: ${numDogs} <br> $${showMoney(dogPrice)}</p>
+                <p>Fries: ${numFries} <br> $${showMoney(friesPrice)}</p>
+                <p>Drinks: ${numDrinks} <br> $${showMoney(drinksPrice)}</p>
+                <p>Subtotal: $${showMoney(subtotal)}</p>
+            `;
+
+            if (discount > 0) {
+                orderSummary.innerHTML += `<p>Discount (10%): $${showMoney(discount)}</p>`;
+                orderSummary.innerHTML += `<p>Discounted Price: $${showMoney(subtotalDiscount)}</p>`;
+            }
+
+            // applying tax
+            let tax = subtotalDiscount * 0.0625;
+            let subtotalFinal = subtotalDiscount + tax;
+
+            orderSummary.innerHTML += `<p>Tax: $${showMoney(tax)}</p>`;
+            orderSummary.innerHTML += `<p><strong>Final Total: $${showMoney(subtotalFinal)}</strong></p>`;
+
+            // append the order summary to the page
+            document.body.appendChild(orderSummary);
+
+        }
+
+        displayMenu();
+
+    </script>
+    <hr />
+    <button onclick="order()">Place Order</button>
+</body>
+</html>
