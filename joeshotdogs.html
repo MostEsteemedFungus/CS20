@@ -16,9 +16,14 @@
         const PRICES = [4.99, 3.99, 1.79];
         const ITEMS = ["Hotdogs", "French Fries", "Drinks"]
         
-        function showMoney(amount) {
+        function roundTo2(amount) {
             let roundedAmount = Math.round(amount * 100); 
             let result = roundedAmount / 100;
+            return result;
+        }
+
+        function showMoney(amount) {
+            let result = roundTo2(amount);
             let resultString = result.toString(); 
             if (!resultString.includes('.')) { //sigh bc i cant use toFixed sigh sigh sighhhhh
                 return resultString + '.00';  // add '.00' if no decimal 
@@ -69,14 +74,6 @@
             let drinksPrice = (numDrinks * PRICES[2])
             let subtotal = dogPrice + friesPrice + drinksPrice;
 
-            // applying discount
-            let discount = 0;
-            let subtotalDiscount = subtotal;
-            if (subtotal >= 30) {
-                discount = subtotal * 0.10; // 10% discount
-                subtotalDiscount -= discount; // update the subtotal after discount
-            }
-
             orderSummary.innerHTML = `
                 <p>Hotdogs: ${numDogs} <br> $${showMoney(dogPrice)}</p>
                 <p>Fries: ${numFries} <br> $${showMoney(friesPrice)}</p>
@@ -84,14 +81,22 @@
                 <p>Subtotal: $${showMoney(subtotal)}</p>
             `;
 
+            // applying discount
+            let discount = 0;
+            let subtotalDiscount = roundTo2(subtotal);
+            if (subtotal >= 30) {
+                discount = subtotal * 0.10; // 10% discount
+                subtotalDiscount -= discount; // update the subtotal after discount
+            }
+
             if (discount > 0) {
                 orderSummary.innerHTML += `<p>Discount (10%): $${showMoney(discount)}</p>`;
                 orderSummary.innerHTML += `<p>Discounted Price: $${showMoney(subtotalDiscount)}</p>`;
             }
 
             // applying tax
-            let tax = subtotalDiscount * 0.0625;
-            let subtotalFinal = subtotalDiscount + tax;
+            let tax = roundTo2(subtotalDiscount * 0.0625);
+            let subtotalFinal = roundTo2(subtotalDiscount + tax);
 
             orderSummary.innerHTML += `<p>Tax: $${showMoney(tax)}</p>`;
             orderSummary.innerHTML += `<p><strong>Final Total: $${showMoney(subtotalFinal)}</strong></p>`;
