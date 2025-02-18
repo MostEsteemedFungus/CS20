@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem 1: Jumps</title>
+    <style>
+        body {
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        input[type="text"] {
+            width: 200px;
+            padding: 10px;
+            margin: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <input type="text" id="leftText" placeholder="Enter text here">
+        <button id="jumper" onclick="toggleText()">JUMP ></button>
+        <input type="text" id="rightText" placeholder="Enter text here">
+    </div>
+
+    <script>
+        function toggleText() {
+            const leftText = document.getElementById('leftText');
+            const rightText = document.getElementById('rightText');
+            const jumper = document.getElementById('jumper');
+
+            // If the button shows 'JUMP >', move text from left to right
+            if (jumper.innerText === 'JUMP >') {
+                rightText.value = leftText.value;
+                leftText.value = '';
+                jumper.innerText = '< JUMP';
+            } 
+            // If the button shows '< JUMP', move text from right to left
+            else {
+                leftText.value = rightText.value;
+                rightText.value = '';
+                jumper.innerText = 'JUMP >';
+            }
+        }
+    </script>
+
+    <div class="container">
+        <a href="problem2.html" target="_blank">Go to Problem 2!</a>
+    </div>
+
+    <div class="container">
+        <a href="problem3.html" target="_blank">Go to Problem 3!</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem 2: Checkboxes</title>
+    <style>
+        body {
+            padding: 20px;
+        }
+        .container {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="checkbox" id="checkAll" onclick="toggleCheckAll()"> <label id="checkAllLabel" for="checkAll">Check All</label>
+    </div>
+
+    <div class="container">
+        <input type="checkbox" id="checkbox1" onclick="updateCheckAllStatus()"> <label for="checkbox1">first</label>
+    </div>
+    <div class="container">
+        <input type="checkbox" id="checkbox2" onclick="updateCheckAllStatus()"> <label for="checkbox2">second</label>
+    </div>
+    <div class="container">
+        <input type="checkbox" id="checkbox3" onclick="updateCheckAllStatus()"> <label for="checkbox3">third</label>
+    </div>
+    <div class="container">
+        <input type="checkbox" id="checkbox4" onclick="updateCheckAllStatus()"> <label for="checkbox4">fourth</label>
+    </div>
+
+    <script>
+        function toggleCheckAll() {
+            const checkAll = document.getElementById('checkAll');
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:not(#checkAll)');
+
+            if (checkAll.checked) {
+                checkboxes.forEach(checkbox => checkbox.checked = true);
+                document.getElementById('checkAllLabel').innerText = 'Uncheck All';
+            } else {
+                checkboxes.forEach(checkbox => checkbox.checked = false);
+                document.getElementById('checkAllLabel').innerText = 'Check All';
+            }
+        }
+
+        function updateCheckAllStatus() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:not(#checkAll)');
+            const checkAll = document.getElementById('checkAll');
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+
+            if (allChecked) {
+                checkAll.checked = true;
+                document.getElementById('checkAllLabel').innerText = 'Uncheck All';
+            } else {
+                checkAll.checked = false;
+                document.getElementById('checkAllLabel').innerText = 'Check All';
+            }
+        }
+    </script>
+
+    <div class="container">
+        <a href="problem1.html" target="_blank">Go to Problem 1!</a>
+    </div>
+    <div class="container">
+        <a href="problem3.html" target="_blank">Go to Problem 3!</a>
+    </div>
+
+</body>
+</html>
