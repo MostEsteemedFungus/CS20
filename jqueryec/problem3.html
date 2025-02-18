@@ -24,12 +24,11 @@
     
     <img id="image" src="images/image1.jpg" alt="Image Slideshow">
     <br>
-    <button id="startButton">Start</button>
-    <button id="stopButton">Stop</button>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
 
     <script>
         $(document).ready(function () {
-            // Array of image URLs
             var images = [
                 "images/image1.jpg", 
                 "images/image2.jpg", 
@@ -38,34 +37,34 @@
                 "images/image5.jpg"
             ];
 
-            var currentImageIndex = 0; // Keep track of the current image index
-            var slideshowInterval; // To store the interval ID for stopping the slideshow
+            var currImage = 0; 
+            var slideshowInterval; 
 
-            // Function to start the slideshow
+            // start the slideshow
             function startSlideshow() {
-                $("#startButton").prop("disabled", true); // Disable the start button to prevent multiple starts
+                $("#start").prop("disabled", true); // disable the start button to prevent multiple starts
                 slideshowInterval = setInterval(function () {
-                    $("#image").fadeOut(1000, function () { // Fade out the current image
-                        currentImageIndex = (currentImageIndex + 1) % images.length; // Get the next image index, loop back to 0 if necessary
-                        $("#image").attr("src", images[currentImageIndex]); // Change the image source
-                        $("#image").fadeIn(1000); // Fade in the new image
+                    $("#image").fadeOut(1000, function () { 
+                        currImage = (currImage + 1) % images.length; 
+                        $("#image").attr("src", images[currImage]); 
+                        $("#image").fadeIn(1000); 
                     });
-                }, 3000); // Change the image every 3 seconds
+                }, 3000); 
             }
 
-            // Function to stop the slideshow
+            // stop the slideshow
             function stopSlideshow() {
-                clearInterval(slideshowInterval); // Stop the interval
-                $("#startButton").prop("disabled", false); // Enable the start button again
+                clearInterval(slideshowInterval); 
+                $("#start").prop("disabled", false); 
             }
 
-            // Event listener for the "Start" button
-            $("#startButton").click(function () {
+            // listener for the "Start" button
+            $("#start").click(function () {
                 startSlideshow();
             });
 
-            // Event listener for the "Stop" button
-            $("#stopButton").click(function () {
+            // listener for the "Stop" button
+            $("#stop").click(function () {
                 stopSlideshow();
             });
         });
