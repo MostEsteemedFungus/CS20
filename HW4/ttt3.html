@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .turn {
+            border: 2px solid #333;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .win {
+            border: 2px solid #333;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+
+        /* make 3x3 grid */
+        .board {
+           display: grid;
+           grid-template-columns: repeat(3, 100px);
+           grid-template-rows: repeat(3, 100px);
+           gap: 5px;
+           margin: 20px auto;
+           width: 330px;
+           height: 330px;
+       }
+
+       /* make pretty squares */
+       .square {
+           width: 100px;
+           height: 100px;
+           background-color: #f0f0f0;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           font-size: 60px;
+           font-family: Verdana, Geneva, Tahoma, sans-serif;
+           border: 1px solid #333;
+           cursor: pointer;
+           transition: background-color 0.3s;
+       }
+
+       /* hovering changes background color */
+       .square:hover {
+           background-color: #a9dee7;
+       }
+
+       /* pretty colors for x's and o's */
+       .x {
+           color: #980d0d;
+       }
+
+       .o {
+           color: rgb(17, 17, 145);
+       }
+
+       /*nicer button */
+       button {
+           background-color: #4CAF50; /* Green */
+           color: white;
+           padding: 15px 32px;
+           font-size: 1.2rem;
+           border: none;
+           border-radius: 8px;
+           cursor: pointer;
+           transition: background-color 0.3s, transform 0.2s;
+           margin-top: 20px;
+       }
+    </style>
+</head>
+<body>
+
+    <!-- Title -->
+    <h1>Tic Tac Toe</h1>
+
+    <!-- Turn indicator -->
+    <div class="turn" id="turn-indicator">X's turn</div>
+
+    <!-- Board container -->
+    <div class="board" id="board">
+        <script>
+            const NUM_SQUARES = 9;
+            let currentPlayer = Math.random() < 0.5 ? 'X' : 'O'; // Randomly decide who starts
+            let board = Array(NUM_SQUARES).fill(null); // Keep track of board state
+
+            for (let i = 0; i < NUM_SQUARES; i++) {
+                let id = "sq" + i;
+                document.write("<div class='square' id='" + id + "' onclick='makeMove(" + i + ")'></div>");
+            }
+
+            // Function to handle moves
+            function makeMove(squareIndex) {
+                const square = document.getElementById("sq" + squareIndex);
+                // Only allow move if square is empty
+                if (board[squareIndex] === null) {
+                    board[squareIndex] = currentPlayer;
+                    square.innerHTML = "<span class='" + currentPlayer.toLowerCase() + "'>" + currentPlayer + "</span>";
+                    alert("You selected square " + squareIndex);
+                    // Swap turns
+                    currentPlayer = (currentPlayer === 'X') ? 'O' : 'X';
+                    document.getElementById("turn-indicator").innerText = currentPlayer + "'s turn";
+                }
+            }
+
+            // Function to start a new game
+            function startGame() {
+                board.fill(null); // Reset the board state
+                for (let i = 0; i < NUM_SQUARES; i++) {
+                    const square = document.getElementById("sq" + i);
+                    square.innerHTML = ""; // Clear the squares
+                }
+                currentPlayer = Math.random() < 0.5 ? 'X' : 'O'; // Randomly decide who starts
+                document.getElementById("turn-indicator").innerText = currentPlayer + "'s turn"; // Update turn message
+            }
+        </script>
+    </div>
+
+    <!-- Win condition display -->
+    <div class="win" id="win-condition">Win Condition</div>
+
+    <!-- Start Game button -->
+    <button onclick="startGame()">Start Game</button>
+
+</body>
+</html>
