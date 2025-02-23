@@ -98,19 +98,19 @@
     <h1>Tic Tac Toe</h1>
 
     <!-- Turn indicator -->
-    <div class="turn" id="turn-indicator">X's turn</div>
+    <div class="turn" id="turn-display">X's turn</div>
 
     <!-- Board container -->
     <div class="board" id="board">
         <script>
             const NUM_SQUARES = 9;
-            let currentPlayer = Math.random() < 0.5 ? 'X' : 'O'; // Randomly select starting player
+            let currPlayer = Math.random() < 0.5 ? 'X' : 'O'; // Randomly select starting player
             let board = Array(NUM_SQUARES).fill(null); 
             let gameOver = false; // Track if the game is over
 
             for (let i = 0; i < NUM_SQUARES; i++) {
                 let id = "sq" + i;
-                document.write("<div class='square' id='" + id + "' onclick='makeMove(" + i + ")'></div>");
+                document.write("<div class='square' id='" + id + "' onclick='placeChar(" + i + ")'></div>");
             }
 
             // Possible win conditions
@@ -126,14 +126,14 @@
             ];
 
             // Function to handle moves
-            function makeMove(squareIndex) {
+            function placeChar(squareIndex) {
                 if (gameOver) return; 
                 
                 const square = document.getElementById("sq" + squareIndex);
                 // Only allow move if square is empty
                 if (board[squareIndex] === null) {
-                    board[squareIndex] = currentPlayer;
-                    square.innerHTML = "<span class='" + currentPlayer.toLowerCase() + "'>" + currentPlayer + "</span>";
+                    board[squareIndex] = currPlayer;
+                    square.innerHTML = "<span class='" + currPlayer.toLowerCase() + "'>" + currPlayer + "</span>";
                     alert("You selected square " + squareIndex);
 
                     // Create the moves array with X, O, and - for empty squares
@@ -149,7 +149,7 @@
 
                     for (let condition of winConditions) {
                         if (condition === 'XXX' || condition === 'OOO') {
-                            document.getElementById("win-condition").innerText = currentPlayer + " wins!";
+                            document.getElementById("win-display").innerText = currPlayer + " wins!";
                             gameOver = true;
                             return;
                         }
@@ -157,34 +157,34 @@
 
                     // Check for tie (no empty squares)
                     if (!moves.includes('-')) {
-                        document.getElementById("win-condition").innerText = "It's a tie!";
+                        document.getElementById("win-display").innerText = "It's a tie!";
                         gameOver = true;
                         return;
                     }
 
                     // Swap turns
-                    currentPlayer = (currentPlayer === 'X') ? 'O' : 'X';
-                    document.getElementById("turn-indicator").innerText = currentPlayer + "'s turn";
+                    currPlayer = (currPlayer === 'X') ? 'O' : 'X';
+                    document.getElementById("turn-display").innerText = currPlayer + "'s turn";
                 }
             }
 
-            // Function to start a new game
+            // Function to reset board and start a new game
             function startGame() {
-                board.fill(null); // Reset the board state
+                board.fill(null); 
                 for (let i = 0; i < NUM_SQUARES; i++) {
                     const square = document.getElementById("sq" + i);
-                    square.innerHTML = ""; // Clear the squares
+                    square.innerHTML = ""; 
                 }
-                currentPlayer = Math.random() < 0.5 ? 'X' : 'O'; // Randomly select starting player
-                document.getElementById("turn-indicator").innerText = currentPlayer + "'s turn"; // Update turn message
-                document.getElementById("win-condition").innerText = "Calculating..."; // Reset win condition message
-                gameOver = false; // Reset game over status
+                currPlayer = Math.random() < 0.5 ? 'X' : 'O';
+                document.getElementById("turn-display").innerText = currPlayer + "'s turn"; 
+                document.getElementById("win-display").innerText = "Calculating..."; 
+                gameOver = false; 
             }
         </script>
     </div>
 
     <!-- Win condition display -->
-    <div class="win" id="win-condition">Calculating...</div>
+    <div class="win" id="win-display">Calculating...</div>
 
     <!-- Start Game button -->
     <button onclick="startGame()">Start Game</button>
