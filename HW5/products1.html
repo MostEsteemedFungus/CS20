@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products JSON</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Products in JSON Format</h1>
+    
+    <div id="productList"></div>
+
+    <script>
+        var products = [
+            {
+            "name": "Eva Unit-01 Action Figure",
+            "description": "Detailed action figure of Eva Unit-01",
+            "price": "$75",
+            "categories": ["collectibles", "mecha"]
+            },
+            {
+            "name": "Shinji Ikari Poster",
+            "description": "High-quality poster of the main character Shinji in his EVA suit",
+            "price": "$20",
+            "categories": ["posters", "Shinji"]
+            },
+            {
+            "name": "Ayanami Rei Figure",
+            "description": "Collectible Rei Ayanami figurine",
+            "price": "$60",
+            "categories": ["collectibles", "Rei"]
+            },
+            {
+            "name": "EVA Pilot Suit Hoodie",
+            "description": "Zippered hoodie with EVA pilot suit design",
+            "price": "$45",
+            "categories": ["clothing"]
+            },
+            {
+            "name": "Eva Unit-02 Pin",
+            "description": "High-quality metal pin of EVA Unit-02's red and yellow design",
+            "price": "$8",
+            "categories": ["accessories", "mecha"]
+            },
+            {
+            "name": "Neon Genesis Evangelion Vinyl",
+            "description": "Complete soundtrack collection of Neon Genesis Evangelion",
+            "price": "$40",
+            "categories": ["music"]
+            },
+            {
+            "name": "Evangelion EVA-01 Plush",
+            "description": "Soft plush of Eva Unit-01 for collectors",
+            "price": "$30",
+            "categories": ["collectibles", "mecha"]
+            },
+            {
+            "name": "Rei Ayanami Cosplay Costume",
+            "description": "Full cosplay costume of Rei Ayanami, including her plug suit",
+            "price": "$120",
+            "categories": ["cosplay", "Rei"]
+            }
+        ];
+
+        // Convert JSON to a string
+        var jsonString = JSON.stringify(products, null, 4);  
+
+        // Display the JSON string 
+        document.write("<pre>" + jsonString + "</pre>");  
+    </script>
+
+</body>
+</html>

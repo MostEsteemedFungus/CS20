@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="products.css"?>
+<products>
+    <product>
+        <name>Eva Unit-01 Action Figure</name>
+        <description>Detailed action figure of Eva Unit-01</description>
+        <price>$75</price>
+        <categories>
+            <category>collectibles</category>
+            <category>mecha</category>
+        </categories>
+    </product>
+    
+    <product>
+        <name>Shinji Ikari Poster</name>
+        <description>High-quality poster of the main character Shinji in his EVA suit</description>
+        <price>$20</price>
+        <categories>
+            <category>posters</category>
+            <category>Shinji</category>
+        </categories>
+    </product>
+    
+    <product>
+        <name>Ayanami Rei Figure</name>
+        <description>Collectible Rei Ayanami figurine</description>
+        <price>$60</price>
+        <categories>
+            <category>collectibles</category>
+            <category>Rei</category>
+        </categories>
+    </product>
+
+    <product>
+        <name>EVA Pilot Suit Hoodie</name>
+        <description>Zippered hoodie with EVA pilot suit design</description>
+        <price>$45</price>
+        <categories>
+            <category>clothing</category>
+        </categories>
+    </product>
+    
+    <product>
+        <name>Eva Unit-02 Pin</name>
+        <description>High-quality metal pin of EVA Unit-02's red and yellow design</description>
+        <price>$8</price>
+        <categories>
+            <category>accessories</category>
+            <category>mecha</category>
+        </categories>
+    </product>
+    
+    <product>
+        <name>Neon Genesis Evangelion Vinyl</name>
+        <description>Complete soundtrack collection of Neon Genesis Evangelion</description>
+        <price>$40</price>
+        <categories>
+            <category>music</category>
+        </categories>
+    </product>
+
+    <product>
+        <name>Evangelion EVA-01 Plush</name>
+        <description>Soft plush of Eva Unit-01 for collectors</description>
+        <price>$30</price>
+        <categories>
+            <category>collectibles</category>
+            <category>mecha</category>
+        </categories>
+    </product>
+    
+    <product>
+        <name>Rei Ayanami Cosplay Costume</name>
+        <description>Full cosplay costume of Rei Ayanami, including her plug suit</description>
+        <price>$120</price>
+        <categories>
+            <category>cosplay</category>
+            <category>Rei</category>
+        </categories>
+    </product>
+</products>
