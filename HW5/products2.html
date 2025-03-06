@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+
+        .product {
+            background-color: #fff;
+            padding: 20px; 
+            margin-bottom: 30px;  
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: block; 
+        }
+
+        .product h3 {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            display: block;  
+            margin-bottom: 10px;
+        }
+
+        .product .description {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 15px;  
+        }
+
+        .product .price {
+            font-size: 1.2em;
+            color: #52d053;
+            margin-bottom: 15px;  
+            display: block;
+        }
+
+        .product .categories {
+            display: block;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .category {
+            background-color: #765898;
+            color: white;
+            padding: 8px 12px;  
+            margin: 5px; 
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        #loadButton {
+            display: block;
+            width: 200px;
+            padding: 10px;
+            margin: 0 auto;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        #loadButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Product Catalog</h1>
+    
+    <button id="loadButton">Load Products</button>
+    
+    <div id="result"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        document.getElementById('loadButton').addEventListener('click', function() {
+            // Using $.get() to load the JSON file
+            $.get('https://mostesteemedfungus.github.io/CS20/HW5/products.json', function(data) {
+                
+                let resultHTML = '';
+
+                // Check if data is an array
+                if (Array.isArray(data)) {
+                    // Iterate over the array of products
+                    data.forEach(function(product) {
+                        resultHTML += `
+                            <div class="product">
+                                <h3>${product.name}</h3>
+                                <p><span class="description">${product.description}</span></p>
+                                <p><span class="price">${product.price}</span></p>
+                                <div class="categories">
+                                    ${product.categories.map(function(category) {
+                                        return `<span class="category">${category}</span>`;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    // Set result div
+                    document.getElementById('result').innerHTML = resultHTML;
+                } else {
+                    document.getElementById('result').innerHTML = "Invalid JSON array!";
+                }
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error fetching JSON: ", textStatus, errorThrown);
+                document.getElementById('result').innerHTML = "Error loading product data. Please try again later.";
+            });
+        });
+    </script>
+</body>
+</html>

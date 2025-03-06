@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+
+        .product {
+            background-color: #fff;
+            padding: 20px; 
+            margin-bottom: 30px;  
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: block; 
+        }
+
+        .product h3 {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            display: block;  
+            margin-bottom: 10px;
+        }
+
+        .product .description {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 15px;  
+        }
+
+        .product .price {
+            font-size: 1.2em;
+            color: #52d053;
+            margin-bottom: 15px;  
+            display: block;
+        }
+
+        .product .categories {
+            display: block;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .category {
+            background-color: #765898;
+            color: white;
+            padding: 8px 12px;  
+            margin: 5px; 
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        #loadButton {
+            display: block;
+            width: 200px;
+            padding: 10px;
+            margin: 20px auto;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        
+        #loadButton:hover {
+            background-color: #0056b3;
+        }
+
+        #categorySelect {
+            width: 220px;
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        #filterButton {
+            padding: 8px 15px;
+            font-size: 1em;
+            cursor: pointer;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            background-color: white;
+            color: #007bff;
+        }
+
+        #filterButton:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Product Catalog</h1>
+    
+    <!-- Load Products -->
+    <button id="loadButton">Load Products</button>
+    
+    <!-- Dropdown and Filter -->
+    <div style="text-align: center;">
+        <select id="categorySelect">
+            <option value="">Select Category</option>
+        </select>
+        <button id="filterButton">Filter</button>
+    </div>
+    
+    <!-- Product Display -->
+    <div id="result"></div>
+
+    <script>
+        // flag to ensure categories are only loaded once
+        let categoriesLoaded = false;
+
+        // load products from the JSON file
+        function loadProducts() {
+            $.get('https://mostesteemedfungus.github.io/CS20/HW5/products.json', function(data) {
+                
+                let resultHTML = '';
+                let categories = new Set();
+
+                if (Array.isArray(data)) {
+                    data.forEach(function(product) {
+                        resultHTML += `
+                            <div class="product">
+                                <h3>${product.name}</h3>
+                                <p><span class="description">${product.description}</span></p>
+                                <p><span class="price">${product.price}</span></p>
+                                <div class="categories">
+                                    ${product.categories.map(function(category) {
+                                        categories.add(category); // Add categories to the set to remove duplicates
+                                        return `<span class="category">${category}</span>`;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    // Set result div
+                    document.getElementById('result').innerHTML = resultHTML;
+
+                    // fill dropdown
+                    if (!categoriesLoaded) {
+                        let categorySelect = $('#categorySelect');
+                        categories.forEach(function(category) {
+                            categorySelect.append(`<option value="${category}">${category}</option>`);
+                        });
+                        categoriesLoaded = true; // set the to prevent reloading categories
+                    }
+                } else {
+                    document.getElementById('result').innerHTML = "Invalid JSON array!";
+                }
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error fetching JSON: ", textStatus, errorThrown);
+                document.getElementById('result').innerHTML = "Error loading product data. Please try again later.";
+            });
+        }
+
+        // filter products based on selected category
+        function filterProducts(category) {
+            $.get('https://mostesteemedfungus.github.io/CS20/HW5/products.json', function(data) {
+                
+                let resultHTML = '';
+
+                if (Array.isArray(data)) {
+                    let filteredProducts = data.filter(function(product) {
+                        return product.categories.includes(category);
+                    });
+
+                    filteredProducts.forEach(function(product) {
+                        resultHTML += `
+                            <div class="product">
+                                <h3>${product.name}</h3>
+                            </div>
+                        `;
+                    });
+
+                    // Set result div with filtered products
+                    document.getElementById('result').innerHTML = resultHTML;
+                } else {
+                    document.getElementById('result').innerHTML = "Invalid JSON array!";
+                }
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error fetching JSON: ", textStatus, errorThrown);
+                document.getElementById('result').innerHTML = "Error loading product data. Please try again later.";
+            });
+        }
+
+        // load products when correct button is clicked
+        $('#loadButton').on('click', loadProducts);
+
+        // filter products when button is clicked
+        $('#filterButton').on('click', function() {
+            let selectedCategory = $('#categorySelect').val();
+            if (selectedCategory) {
+                filterProducts(selectedCategory);
+            } else {
+                document.getElementById('result').innerHTML = "Please select a category to filter.";
+            }
+        });
+    </script>
+</body>
+</html>
