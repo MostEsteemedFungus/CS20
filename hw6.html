@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Euro Exchange Rate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #bfc6de;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #fff800;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 24px;
+            color: #fff800;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #0e2a8e;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .dropdown-container {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center; 
+        }
+
+        select {
+            width: 250px; 
+            padding: 10px;
+            font-size: 16px;
+            color: #333;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #0e2a8e;
+            box-shadow: 0 2px 6px rgba(75, 141, 248, 0.3);
+        }
+
+        #result {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #0e2a8e;
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #0e2a8e;
+            font-size: 14px;
+        }
+
+        ul {
+            color: white; 
+            list-style-position: inside;  
+            padding-left: 20px;  
+        }
+
+        li {
+            text-align: left; 
+            margin-bottom: 10px;  
+        }
+
+        a {
+            color: #fff800; 
+        }
+
+        a:hover {
+            color: #ffcc00; 
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="container">
+        <h1>Euro Exchange Rate!</h1>
+
+        <div class="dropdown-container">
+            <select id="currency-dropdown">
+                <option value="">Select a Currency</option>
+            </select>
+        </div>
+
+        <div id="result"></div>
+    </div>
+    
+
+    <script>
+        // API URLs
+        const symbolsApiUrl = 'https://data.fixer.io/api/symbols?access_key=c19003ad78c29060bc15ebe45c65b16c';
+        const conversionApiUrl = 'https://data.fixer.io/api/latest?base=EUR&symbols=';
+
+        function fetchCurrencies() {
+            fetch(symbolsApiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.symbols) {
+                        fillDropdown(data.symbols);
+                    } else {
+                        alert('Error: No currency symbols found!');
+                    }
+                })
+                .catch(error => {
+                    alert('Error: Bad request');
+                    console.error(error);
+                });
+        }
+
+        function fillDropdown(symbols) {
+            const dropdown = document.getElementById('currency-dropdown');
+
+            for (const code in symbols) {
+                if (symbols.hasOwnProperty(code)) {
+                    const option = document.createElement('option');
+                    option.value = code;
+                    option.textContent = `${code} - ${symbols[code]}`;
+                    dropdown.appendChild(option);
+                }
+            }
+        }
+
+        function fetchRate(currencyCode) {
+            if (!currencyCode) return;
+
+            fetch(`${conversionApiUrl}${currencyCode}&access_key=c19003ad78c29060bc15ebe45c65b16c`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.rates && data.rates[currencyCode]) {
+                        displayRate(currencyCode, data.rates[currencyCode]);
+                    } else {
+                        alert('ERROR: No conversion rate found!');
+                    }
+                })
+                .catch(error => {
+                    alert('ERROR: Bad request');
+                    console.error(error);
+                });
+        }
+
+        function displayRate(currencyCode, conversionRate) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `1 EUR = ${conversionRate} ${currencyCode}`;
+        }
+
+        document.getElementById('currency-dropdown').addEventListener('change', function () {
+            const selectedCurrency = this.value;
+            fetchRate(selectedCurrency);
+        });
+
+        window.onload = function () {
+            fetchCurrencies();
+        };
+    </script>
+
+    <br>
+
+    <div class="container">
+        <h2>About this API</h2>
+        <ul>
+            <li>Fixer.io is an API that gives users access to current and 
+                historical foreign exchange rates
+            </li>
+            <li>I chose Fixer.io because I used to check the Euro exchange
+                rate every day in my high-school French class.
+            </li>
+            <li>I discovered Fixer.io on <a href="https://github.com/public-apis/public-apis?tab=readme-ov-file" target="_blank">this GitHub repo</a>
+                 of public APIs.
+            </li>
+            <li>To get the list of currencies (symbols) for the dropdown,
+                I only had to provide my access key as a parameter.
+           </li>
+           <li>To get the Euro exchange rate I had to provide the base 
+                currency (Euro or EUR), the currency to convert to 
+                (a three letter symbol), and my access key as parameters.
+            </li>
+            <li>This API would be useful on an international trading website
+                where investors needed to know the exchange rates of the various
+                currencies they deal in.
+           </li>
+        </ul>
+        <p></p>
+    </div>
+
+    <div class="footer">
+        <p>Powered by Fixer.io</p>
+    </div>
+
+</body>
+</html>
