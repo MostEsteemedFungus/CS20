@@ -1,22 +1,9 @@
-<?php
-// Create an associative array with office hours for each day of the week
-$office_hours = array(
-    "Monday"    => "9am - 5pm",
-    "Tuesday"   => "9am - 5pm",
-    "Wednesday" => "9am - 5pm",
-    "Thursday"  => "9am - 5pm",
-    "Friday"    => "9am - 5pm",
-    "Saturday"  => "Closed",
-    "Sunday"    => "Closed"
-);
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Office Hours</title>
+    <title>Associative Array</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -67,6 +54,17 @@ $office_hours = array(
                 <th>Office Hours</th>
             </tr>
             <?php
+    
+            $office_hours = array(
+                "Monday"    => "9am - 5pm",
+                "Tuesday"   => "9am - 5pm",
+                "Wednesday" => "9am - 5pm",
+                "Thursday"  => "9am - 5pm",
+                "Friday"    => "9am - 5pm",
+                "Saturday"  => "Closed",
+                "Sunday"    => "Closed"
+            );
+            
             // Loop through the array and display the day and hours
             foreach ($office_hours as $day => $hours) {
                 echo "<tr>";
