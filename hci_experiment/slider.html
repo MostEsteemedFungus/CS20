@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slider</title>
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <style>
+    /* Centering the content on the page */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      background-color: #f0f0f0; 
+    }
+
+    /* Container for video */
+    #player {
+      margin-bottom: 20px; /* Adds space between the video and the slider */
+    }
+
+    label {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Embedded YouTube Video -->
+  <div id="player"></div>
+
+  <br><br>
+
+  <!-- Volume Slider -->
+  <label for="volume">Volume: </label>
+  <input type="range" id="volume" name="volume" min="0" max="100" value="0">
+
+  <script>
+    let player;
+
+    // YT API
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '390',
+        width: '640',
+        videoId: '6TzEW8JwOec', 
+        events: {
+          'onReady': onPlayerReady,
+        }
+      });
+    }
+
+    function onPlayerReady(event) {
+      player.setVolume(0);
+    }
+
+    // Handle volume change from slider
+    const volumeSlider = document.getElementById("volume");
+
+    volumeSlider.addEventListener("input", function() {
+      const volume = volumeSlider.value;
+      player.setVolume(volume); // Set the volume on the YouTube player
+    });
+  </script>
+
+</body>
+</html>
