@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Textbox</title>
-  <script src="https://www.youtube.com/iframe_api"></script>
-
+  
   <style>
     /* Centering the content on the page */
     body {
@@ -15,7 +14,7 @@
       height: 100vh;
       margin: 0;
       flex-direction: column;
-      background-color: #f0f0f0; /
+      background-color: #f0f0f0;
     }
 
     /* Container for video */
@@ -42,8 +41,10 @@
 </head>
 <body>
 
-  <!-- Embedded YouTube Video -->
-  <div id="player"></div>
+  <!-- Direct YouTube Embed -->
+  <div id="player">
+    <iframe width="640" height="390" src="https://www.youtube.com/embed/6TzEW8JwOec?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
 
   <br><br>
 
@@ -54,12 +55,10 @@
   <script>
     let player;
 
-    // YT API
+    // YT API setup
     function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '390',
-        width: '640',
-        videoId: '6TzEW8JwOec', 
+      const iframe = document.querySelector('iframe');
+      player = new YT.Player(iframe, {
         events: {
           'onReady': onPlayerReady,
         }
@@ -74,11 +73,14 @@
     const volumeInput = document.getElementById("volume");
 
     volumeInput.addEventListener("input", function() {
-      const volume = Math.max(0, Math.min(100, volumeInput.value)); // Keep the volume is between 0 and 100
+      const volume = Math.max(0, Math.min(100, volumeInput.value)); // Keep the volume between 0 and 100
       player.setVolume(volume); // Set the volume on the YouTube player
     });
   </script>
 
+  <script src="https://www.youtube.com/iframe_api"></script>
+
 </body>
 </html>
+
 
